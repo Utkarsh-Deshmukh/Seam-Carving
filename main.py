@@ -23,8 +23,11 @@ def calcEnergy(img):
 
 def carveColumns(img, num):
     count = 0;
+    color_img = img;
     while(count < num):
         count = count + 1;
+        img = cv2.cvtColor(np.uint8(color_img),cv2.COLOR_BGR2GRAY)
+        img = np.double(img);
         EnergyImg = calcEnergy(img);
         cumsumEnergy = np.zeros(EnergyImg.shape);
         PathMatrix = np.zeros(EnergyImg.shape);
@@ -51,31 +54,48 @@ def carveColumns(img, num):
         currIndex = startIndex;
         carveElements = [];
         img = np.uint8(img);
-        final = [];
+        final_b = [];  final_g = [];  final_r = [];
         for i in range(rows-1,-1,-1):
             carveElements.append(currIndex);
-            img[i,currIndex] = 255;
-            row = img[i,:];
-            
-            out = np.delete(row,currIndex);
-            final.append(out);
-    
+            color_img[i,currIndex,2] = 255;         # This step is only for visualisation purpose.
+            row_b = color_img[i,:,0];
+            row_g = color_img[i,:,1];
+            row_r = color_img[i,:,2];
+        
+            out_b = np.delete(row_b,currIndex);
+            out_g = np.delete(row_g,currIndex);
+            out_r = np.delete(row_r,currIndex);
+
+            final_b.append(out_b);
+            final_g.append(out_g);
+            final_r.append(out_r);
+
             if(PathMatrix[i,currIndex] == 0):
                 currIndex = currIndex - 1;
             elif(PathMatrix[i,currIndex] == 1):
                 currIndex = currIndex;
             else:
                 currIndex = currIndex + 1;
-            
-        cv2.imshow('a',img);cv2.waitKey(1);
-        final = np.array(final);
-        img = cv2.flip(final,0);
-        cv2.imshow('a',img);
-        cv2.waitKey(2);
-    return(img)
+        
+        cv2.imshow('a',color_img/255);cv2.waitKey(1);
+        r,c = np.shape(final_b)
+        temp_final = np.zeros((r,c,3))
+        cv2.imshow('a',color_img/255);
+        temp_final[:,:,0] = final_b;
+        temp_final[:,:,1] = final_g;
+        temp_final[:,:,2] = final_r;
+        color_img = temp_final;
+        color_img = np.array(color_img);
+        
+        color_img = cv2.flip(color_img,0);
+        cv2.imshow('a',color_img/255);
+        cv2.waitKey(1);
+    return(color_img)
     
 if __name__ == '__main__':
-    img = cv2.imread('images/img2.jpg',0);
+    img = cv2.imread('images/img2.jpg',1);
     
     img = np.double(img);
-    final = carveColumns(img,100);
+    out = carveColumns(img,100);
+    
+    
