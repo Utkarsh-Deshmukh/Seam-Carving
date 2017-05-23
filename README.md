@@ -23,5 +23,9 @@ run the main.py file
 # Notes:
 Presently the code only carves out columns in the image (Vertical seams). I will push the code to carve horizontal seams soon.
 
-Refrences
+# Refrences
 [1] S. Avidan and A. Shamir. Seam carving for content-aware image resizing. ACM Trans. on Graphics, 26(3), 2007
+
+
+# Acknowledgements
+I would like to thank Swanand Pathak for his help and guidance
