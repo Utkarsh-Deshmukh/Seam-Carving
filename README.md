@@ -16,6 +16,8 @@ The energy function used is the magnitude of simple first order partial derivati
 
 ![temp](https://cloud.githubusercontent.com/assets/13918778/26340060/1b9289fa-3f41-11e7-9b99-f4718e659803.PNG)
 
+## Dependencies 
+opencv
 
 # How to run the file?
 run the main.py file
