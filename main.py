@@ -90,6 +90,7 @@ def carveColumns(img, num):
         color_img = cv2.flip(color_img,0);
         cv2.imshow('a',color_img/255);
         cv2.waitKey(1);
+        
     return(color_img)
     
 if __name__ == '__main__':
